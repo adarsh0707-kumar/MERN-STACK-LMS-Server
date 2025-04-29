@@ -7,6 +7,6 @@ userRouter.post('/registration', registrationUser);
 
 userRouter.post("/activate-user", activateUser);
 
-userRouter.post("/login-user", loginUser);
+userRouter.post("/login", loginUser);
 
 export default userRouter;

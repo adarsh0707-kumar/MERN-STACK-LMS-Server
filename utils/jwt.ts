@@ -14,7 +14,7 @@ interface ITokenOptions{
 
 }
 
-export const sendToken = (user: IUser, statusCode: number, res: Response) => {
+export const sendToken = (user:IUser, statusCode: number, res: Response) => {
   const accessToken = user.SignAccessToken();
   const refreshToken = user.SignRefreshToken();
 
@@ -51,7 +51,8 @@ export const sendToken = (user: IUser, statusCode: number, res: Response) => {
   }
 
   res.cookie("access_token", accessToken, accessTokenOptions);
-  res.cookie("access_token", refreshToken, refreshTokenOptions);
+  res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+
 
   res.status(statusCode).json({
     success: true,
