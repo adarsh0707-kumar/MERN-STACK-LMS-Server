@@ -18,7 +18,7 @@ export interface IUser extends Document {
   isVerified: boolean;
   courses: Array<{ courseId: string }>;
   comparePassword(password: string): Promise<boolean>;
-  SignAcessToken: () => string;
+  SignAccessToken: () => string;
   SignRefreshToken: () => string;
 }
 
@@ -77,7 +77,7 @@ userSchema.pre<IUser>('save', async function (next) {
 
 // sign access token 
 
-userSchema.methods.SignAcessToken = function () {
+userSchema.methods.SignAccessToken = function () {
   return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN || '');
 };
 

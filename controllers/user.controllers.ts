@@ -8,6 +8,7 @@ import ejs from 'ejs';
 import path from 'path';
 import sendMail from "../utils/sendMail";
 import { resolveTypeReferenceDirective } from "typescript";
+import { sendToken } from "../utils/jwt";
 
 
 
@@ -167,6 +168,8 @@ export const loginUser = CatchAsyncError(async (req: Request, res: Response, nex
     if (!isPasswordMatch) {
       return next(new ErrorHandler("Invalid email or password", 400));
     }
+
+    sendToken(user, 200, res);
 
 
 
