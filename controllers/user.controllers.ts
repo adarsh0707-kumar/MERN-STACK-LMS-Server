@@ -9,6 +9,7 @@ import path from "path";
 import sendMail from "../utils/sendMail";
 import { resolveTypeReferenceDirective } from "typescript";
 import { sendToken } from "../utils/jwt";
+import { redis } from '../utils/redis';
 
 // resistor user
 
@@ -174,6 +175,10 @@ export const logoutUser = CatchAsyncError(
     try {
       res.cookie("access_token", "", { maxAge: 1 });
       res.cookie("refresh_token", "", { maxAge: 1 });
+
+      const userId = req.user?._id || '';
+      redis.del(userId);
+
       res.status(200).json({
         success: true,
         message: "Logged out successfully",
@@ -183,3 +188,6 @@ export const logoutUser = CatchAsyncError(
     }
   }
 );
+
+
+//
