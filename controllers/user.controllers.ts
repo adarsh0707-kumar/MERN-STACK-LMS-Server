@@ -7,8 +7,14 @@ require("dotenv").config();
 import ejs from "ejs";
 import path from "path";
 import sendMail from "../utils/sendMail";
-import { resolveTypeReferenceDirective } from "typescript";
-import { sendToken, accessTokenOptions, refreshTokenOptions } from "../utils/jwt";
+// import { resolveTypeReferenceDirective } from "typescript";
+import { getUserById } from "../services/user.services";
+import {
+  sendToken,
+  accessTokenOptions,
+  refreshTokenOptions,
+} from "../utils/jwt";
+
 import { redis } from "../utils/redis";
 
 // resistor user
@@ -229,17 +235,34 @@ export const updateAccessToken = CatchAsyncError(
         }
       );
 
-      res.cookie("access_token", accessToken,accessTokenOptions);
+      res.cookie("access_token", accessToken, accessTokenOptions);
       res.cookie("refresh_token", refreshToken, refreshTokenOptions);
 
       res.status(200).json({
-        status:"success",
+        status: "success",
         accessToken,
-      })
-
-
+      });
     } catch (err: any) {
       return next(new ErrorHandler(err.message, 400));
     }
   }
 );
+
+// get user info
+
+export const getUserInfo = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = req.user?._id;
+      getUserById(userId, res);
+    } catch (err: any) {
+      return next(new ErrorHandler(err.message, 400));
+    }
+  }
+);
+
+
+
+
+
+
