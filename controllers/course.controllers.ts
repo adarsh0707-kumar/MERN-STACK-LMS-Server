@@ -9,7 +9,7 @@ import { createCourse } from '../services/course.services'
 export const uploadCourse = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = req.body
+      const data = req.body;
       const thumbnail = data.thumbnail
       if (thumbnail) {
         const myCloud = await cloudinary.v2.uploader.upload(thumbnail, {
@@ -28,3 +28,5 @@ export const uploadCourse = CatchAsyncError(
     }
   }
 )
+
+

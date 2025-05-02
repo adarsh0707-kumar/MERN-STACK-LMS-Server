@@ -6,7 +6,7 @@ const courseRouter = express.Router()
 courseRouter.post(
   '/creat-course',
   isAutheticated,
-  authorizeRoles('admin'),
+  authorizeRoles("admin"),
   uploadCourse
 )
 
