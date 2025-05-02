@@ -389,9 +389,9 @@ export const updateProfilePicture = CatchAsyncError(
       const user = await userModel.findById(userId)
 
       if (avatar && user) {
-        // if user have one avatar the call this if
+        // if user have one avatar then call this if
         if (user?.avatar?.public_id) {
-          // first delet the old pic
+          // first delete the old pic
 
           await cloudinary.v2.uploader.destroy(user?.avatar?.public_id)
 
@@ -413,7 +413,7 @@ export const updateProfilePicture = CatchAsyncError(
             width: 150,
             height: 150
           })
-          
+
           user.avatar = {
             public_id: myCloud.public_id,
             url: myCloud.secure_url
