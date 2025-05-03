@@ -8,10 +8,10 @@ interface IComment extends Document {
 }
 
 interface IReview extends Document {
-  user: object
+  user: IUser
   rating: number
   comment: string
-  commentReplies: IComment[]
+  commentReplies?: IComment[]
 }
 
 interface ILink extends Document {
@@ -43,7 +43,7 @@ interface ICourse extends Document {
   demoUrl: string
   benefits: { title: string }[]
   prerequisites: { title: string }[]
-  review: IReview
+  review: IReview[]
   courseData: ICourseData
   rating?: number
   purchased?: number
