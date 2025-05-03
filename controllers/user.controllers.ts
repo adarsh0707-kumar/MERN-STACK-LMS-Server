@@ -7,7 +7,8 @@ require('dotenv').config()
 import ejs from 'ejs'
 import path from 'path'
 import sendMail from '../utils/sendMail'
-// import { resolveTypeReferenceDirective } from "typescript";
+// import { resolveTypeReferenceDirective } from "typescript";addQuestion
+
 import { getUserById } from '../services/user.services'
 import {
   sendToken,
