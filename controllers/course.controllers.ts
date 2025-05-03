@@ -89,3 +89,22 @@ export const getSingleCourse = CatchAsyncError(
     }
   }
 )
+
+// get All course --- without purchasing
+
+export const getAllCourse = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const course = await CourseModel.find().select(
+        '-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links'
+      )
+
+      res.status(200).json({
+        success: true,
+        course
+      })
+    } catch (err: any) {
+      return next(new ErrorHandler(err.message, 500))
+    }
+  }
+)
