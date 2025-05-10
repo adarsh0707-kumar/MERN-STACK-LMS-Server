@@ -349,15 +349,15 @@ export const addReview = CatchAsyncError(
         rating
       }
 
-      course?.review.push(reviewData)
+      course?.reviews.push(reviewData)
 
       let avg = 0
-      course?.review.forEach((rev: any) => {
+      course?.reviews.forEach((rev: any) => {
         avg += rev.rating
       })
 
       if (course) {
-        course.rating = avg / course.review.length
+        course.rating = avg / course.reviews.length
       }
 
       await course?.save()
@@ -371,6 +371,51 @@ export const addReview = CatchAsyncError(
       res.status(200).json({
         success: true,
         review
+      })
+    } catch (err: any) {
+      return next(new ErrorHandler(err.message, 500))
+    }
+  }
+)
+
+// add reply in review
+interface IAddReplyToReviewData {
+  comment: string
+  courseId: string
+  reviewId: string
+}
+
+export const addReplyToReview = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { comment, courseId, reviewId } = req.body as IAddReplyToReviewData
+
+      const course = await CourseModel.findById(courseId)
+
+      if (!course) {
+        return next(new ErrorHandler('Course not found', 404))
+      }
+
+      const review = course?.reviews?.find(
+        (rev: any) => rev._id.toString() === reviewId
+      )
+
+      if (!review) {
+        return next(new ErrorHandler('Review not found', 404))
+      }
+
+      const replyData: any = {
+        user: req.user,
+        comment
+      }
+
+      course.reviews.push(replyData)
+
+      await course.save()
+
+      res.status(200).json({
+        success: true,
+        course
       })
     } catch (err: any) {
       return next(new ErrorHandler(err.message, 500))

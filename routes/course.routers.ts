@@ -2,6 +2,7 @@ import express from 'express'
 import {
   addAnswer,
   addQuestion,
+  addReplyToReview,
   addReview,
   editCourse,
   getAllCourse,
@@ -38,5 +39,11 @@ courseRouter.put('/add-answer', isAutheticated, addAnswer)
 
 courseRouter.put('/add-review/:id', isAutheticated, addReview)
 
+courseRouter.put(
+  '/add-reply',
+  isAutheticated,
+  authorizeRoles('admin'),
+  addReplyToReview
+)
 
 export default courseRouter
