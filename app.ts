@@ -2,12 +2,13 @@
 import 'dotenv/config'
 import express, { NextFunction, Request, Response } from 'express'
 export const app = express()
-
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+
 import { ErrorMiddlewere } from './middleware/error'
 import userRouter from './routes/user.routes'
 import courseRouter from './routes/course.routers'
+import orderRouter from './routes/order.routers'
 
 // body parser
 
@@ -29,9 +30,7 @@ app.use(
 )
 // routes
 
-app.use('/api/v1', userRouter)
-
-app.use('/api/v1', courseRouter)
+app.use('/api/v1', userRouter, courseRouter, orderRouter)
 
 // testing api
 app.get('/test', (req: Request, res: Response, next: NextFunction) => {
