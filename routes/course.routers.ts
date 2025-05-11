@@ -6,6 +6,7 @@ import {
   addReview,
   editCourse,
   getAllCourse,
+  getAllCourses,
   getCourseByUser,
   getSingleCourse,
   uploadCourse
@@ -45,5 +46,13 @@ courseRouter.put(
   authorizeRoles('admin'),
   addReplyToReview
 )
+
+courseRouter.get(
+  '/get-courses',
+  isAutheticated,
+  authorizeRoles('admin'),
+  getAllCourses
+)
+
 
 export default courseRouter
