@@ -10,7 +10,8 @@ import {
   updateUserInfo,
   updatePassword,
   updateProfilePicture,
-  getAllUsers
+  getAllUsers,
+  updateUserRole
 } from '../controllers/user.controllers'
 import { isAutheticated, authorizeRoles } from '../middleware/auth'
 
@@ -42,5 +43,13 @@ userRouter.get(
   authorizeRoles('admin'),
   getAllUsers
 )
+
+userRouter.put(
+  '/update-user',
+  isAutheticated,
+  authorizeRoles('admin'),
+  updateUserRole
+)
+
 
 export default userRouter
