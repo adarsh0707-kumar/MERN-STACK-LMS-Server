@@ -9,7 +9,7 @@ import path from 'path'
 import sendMail from '../utils/sendMail'
 // import { resolveTypeReferenceDirective } from "typescript";addQuestion
 
-import { getUserById } from '../services/user.services'
+import { getAllUsersServices, getUserById } from '../services/user.services'
 import {
   sendToken,
   accessTokenOptions,
@@ -430,6 +430,18 @@ export const updateProfilePicture = CatchAsyncError(
         success: true,
         user
       })
+    } catch (err: any) {
+      return next(new ErrorHandler(err.message, 400))
+    }
+  }
+)
+
+// get all users -- only for admin
+
+export const getAllUsers = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllUsersServices(res)
     } catch (err: any) {
       return next(new ErrorHandler(err.message, 400))
     }

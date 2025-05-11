@@ -7,7 +7,7 @@ import ErrorHandler from '../utils/ErrorHandler'
 import { IOrder } from '../models/order.models'
 import userModel from '../models/user.models'
 import CourseModel from '../models/course.models'
-import { newOrder } from '../services/order.services'
+import { getAllOrderServices, newOrder } from '../services/order.services'
 import sendMail from '../utils/sendMail'
 import NotificationModel from '../models/notification.models'
 
@@ -92,3 +92,16 @@ export const createOrder = CatchAsyncError(
     }
   }
 )
+
+// get all order --only for admin
+
+export const getAllOrder = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllOrderServices(res)
+    } catch (err: any) {
+      return next(new ErrorHandler(err.message, 400))
+    }
+  }
+)
+
