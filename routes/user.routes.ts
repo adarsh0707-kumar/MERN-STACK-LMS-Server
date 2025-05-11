@@ -11,7 +11,8 @@ import {
   updatePassword,
   updateProfilePicture,
   getAllUsers,
-  updateUserRole
+  updateUserRole,
+  deleteUser
 } from '../controllers/user.controllers'
 import { isAutheticated, authorizeRoles } from '../middleware/auth'
 
@@ -49,6 +50,13 @@ userRouter.put(
   isAutheticated,
   authorizeRoles('admin'),
   updateUserRole
+)
+
+userRouter.delete(
+  '/delete-user/:id',
+  isAutheticated,
+  authorizeRoles('admin'),
+  deleteUser
 )
 
 
