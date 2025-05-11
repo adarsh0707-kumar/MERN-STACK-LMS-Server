@@ -4,6 +4,7 @@ import {
   addQuestion,
   addReplyToReview,
   addReview,
+  deleteCourse,
   editCourse,
   getAllCourse,
   getAllCourses,
@@ -52,6 +53,13 @@ courseRouter.get(
   isAutheticated,
   authorizeRoles('admin'),
   getAllCourses
+)
+
+courseRouter.delete(
+  '/delete-course/:id',
+  isAutheticated,
+  authorizeRoles('admin'),
+  deleteCourse
 )
 
 
