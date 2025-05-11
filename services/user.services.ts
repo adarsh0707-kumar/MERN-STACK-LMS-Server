@@ -16,3 +16,6 @@ export const getUserById = async (id: string, res: Response) => {
 
   
 };
+
+// get all users
+
