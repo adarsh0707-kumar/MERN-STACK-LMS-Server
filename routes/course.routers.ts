@@ -14,7 +14,7 @@ import { authorizeRoles, isAutheticated } from '../middleware/auth'
 const courseRouter = express.Router()
 
 courseRouter.post(
-  '/creat-course',
+  '/create-course',
   isAutheticated,
   authorizeRoles('admin'),
   uploadCourse
