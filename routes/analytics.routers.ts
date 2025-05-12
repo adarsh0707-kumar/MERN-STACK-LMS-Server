@@ -1,7 +1,10 @@
 import express from 'express'
 
 import { authorizeRoles, isAutheticated } from '../middleware/auth'
-import { getUserAnalytics } from '../controllers/analytics.controllers'
+import {
+  getCoursesAnalytics,
+  getUserAnalytics
+} from '../controllers/analytics.controllers'
 
 const analyticsRouter = express.Router()
 
@@ -10,6 +13,13 @@ analyticsRouter.get(
   isAutheticated,
   authorizeRoles('admin'),
   getUserAnalytics
+)
+
+analyticsRouter.get(
+  '/get-courses-analytics',
+  isAutheticated,
+  authorizeRoles('admin'),
+  getCoursesAnalytics
 )
 
 export default analyticsRouter

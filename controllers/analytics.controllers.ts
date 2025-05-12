@@ -4,6 +4,7 @@ import { CatchAsyncError } from '../middleware/catchAsyncError'
 import ErrorHandler from '../utils/ErrorHandler'
 import { generateLast12MonthData } from '../utils/analytics.generator'
 import userModel from '../models/user.models'
+import CourseModel from '../models/course.models'
 
 // get users analytics --- only for admin
 
@@ -24,3 +25,22 @@ export const getUserAnalytics = CatchAsyncError(
     }
   }
 )
+
+
+// get courses analytics --- only for admin
+
+export const getCoursesAnalytics = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const courses = await generateLast12MonthData(CourseModel)
+
+      res.status(200).json({
+        success: true,
+        courses
+      })
+    } catch (err: any) {
+      return next(new ErrorHandler(err.message, 500))
+    }
+  }
+)
+
