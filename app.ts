@@ -11,6 +11,7 @@ import courseRouter from './routes/course.routers'
 import orderRouter from './routes/order.routers'
 import notificationRouter from './routes/notification.routers'
 import analyticsRouter from './routes/analytics.routers'
+import LayoutRouter from './routes/layout.routers'
 
 // body parser
 
@@ -38,7 +39,8 @@ app.use(
   courseRouter,
   orderRouter,
   notificationRouter,
-  analyticsRouter
+  analyticsRouter,
+  LayoutRouter
 )
 
 // testing api
