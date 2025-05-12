@@ -4,6 +4,7 @@ import cloudinary from 'cloudinary'
 import { CatchAsyncError } from '../middleware/catchAsyncError'
 import ErrorHandler from '../utils/ErrorHandler'
 import LayoutModel from '../models/layout.models'
+import { title } from 'process'
 
 // create layout
 
@@ -11,6 +12,12 @@ export const createLayout = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { type } = req.body
+
+      const isTypeExist = await LayoutModel.findOne({ type })
+
+      if (isTypeExist) {
+        return next(new ErrorHandler(`${type} already exist`, 400))
+      }
 
       if (type === 'Banner') {
         const { image, title, subTitle } = req.body
@@ -33,12 +40,32 @@ export const createLayout = CatchAsyncError(
 
       if (type === 'FAQ') {
         const { faq } = req.body
-        await LayoutModel.create(faq)
+        const faqItems = await Promise.all(
+          faq.map(async (item: any) => {
+            return {
+              question: item.question,
+              answer: item.answer
+            }
+          })
+        )
+        await LayoutModel.create({ type: 'FAQ', faq: faqItems })
       }
 
       if (type === 'Categories') {
         const { categoties } = req.body
-        await LayoutModel.create(categoties)
+
+        const categotiesItems = await Promise.all(
+          categoties.map(async (item: any) => {
+            return {
+              title: item.title
+            }
+          })
+        )
+
+        await LayoutModel.create({
+          type: 'Categories',
+          categoties: categotiesItems
+        })
       }
 
       res.status(200).json({

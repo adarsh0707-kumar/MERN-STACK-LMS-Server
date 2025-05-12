@@ -12,5 +12,4 @@ LayoutRouter.post(
   createLayout
 )
 
-
 export default LayoutRouter
