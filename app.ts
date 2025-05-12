@@ -10,6 +10,7 @@ import userRouter from './routes/user.routes'
 import courseRouter from './routes/course.routers'
 import orderRouter from './routes/order.routers'
 import notificationRouter from './routes/notification.routers'
+import analyticsRouter from './routes/analytics.routers'
 
 // body parser
 
@@ -31,7 +32,14 @@ app.use(
 )
 // routes
 
-app.use('/api/v1', userRouter, courseRouter, orderRouter, notificationRouter)
+app.use(
+  '/api/v1',
+  userRouter,
+  courseRouter,
+  orderRouter,
+  notificationRouter,
+  analyticsRouter
+)
 
 // testing api
 app.get('/test', (req: Request, res: Response, next: NextFunction) => {
