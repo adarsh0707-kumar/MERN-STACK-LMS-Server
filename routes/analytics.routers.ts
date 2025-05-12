@@ -3,6 +3,7 @@ import express from 'express'
 import { authorizeRoles, isAutheticated } from '../middleware/auth'
 import {
   getCoursesAnalytics,
+  getOrdersAnalytics,
   getUserAnalytics
 } from '../controllers/analytics.controllers'
 
@@ -20,6 +21,13 @@ analyticsRouter.get(
   isAutheticated,
   authorizeRoles('admin'),
   getCoursesAnalytics
+)
+
+analyticsRouter.get(
+  '/get-orders-analytics',
+  isAutheticated,
+  authorizeRoles('admin'),
+  getOrdersAnalytics
 )
 
 export default analyticsRouter
